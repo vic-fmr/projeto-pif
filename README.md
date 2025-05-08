@@ -9,3 +9,11 @@
     <li>Ana Sofia Da Silva Moura: @sun-cs-sol</li>
     <li>René Melo de Lucena: @renysoo</li>
 </ul>
+
+## Como rodar o projeto
+
+Para executar o projeto, certifique-se de ter o `make` instalado e, em seguida, rode o seguinte comando no terminal:
+
+```bash
+make run
+
