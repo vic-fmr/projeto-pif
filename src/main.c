@@ -1,89 +1,33 @@
-/**
- * main.h
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
+#include <stdio.h>
+#include "ranking.h"
+#include "temporizador.h"
 
-#include <string.h>
+int main() {
+    char nome[50];
+    time_t inicio;
+    int acertou = 0; 
 
-#include "screen.h"
-#include "keyboard.h"
-#include "timer.h"
+   
+    do {
+        printf("Digite seu nome (sem vírgulas): ");
+        scanf("%49s", nome);
+    } while (!validar_nome(nome));
 
-int x = 34, y = 12;
-int incX = 1, incY = 1;
-
-void printHello(int nextX, int nextY)
-{
-    screenSetColor(CYAN, DARKGRAY);
-    screenGotoxy(x, y);
-    printf("           ");
-    x = nextX;
-    y = nextY;
-    screenGotoxy(x, y);
-    printf("Hello World");
-}
-
-void printKey(int ch)
-{
-    screenSetColor(YELLOW, DARKGRAY);
-    screenGotoxy(35, 22);
-    printf("Key code :");
-
-    screenGotoxy(34, 23);
-    printf("            ");
+   
+    iniciar_temporizador(&inicio);
+    printf("=== DESCUBRA O ASSASSINO ===\n");
     
-    if (ch == 27) screenGotoxy(36, 23);
-    else screenGotoxy(39, 23);
 
-    printf("%d ", ch);
-    while (keyhit())
-    {
-        printf("%d ", readch());
-    }
-}
+  
+    double tempo = parar_temporizador(inicio);
+    salvar_ranking(nome, tempo, acertou);
 
-int main() 
-{
-    static int ch = 0;
-    static long timer = 0;
-
-    screenInit(1);
-    keyboardInit();
-    timerInit(50);
-
-    printHello(x, y);
-    screenUpdate();
-
-    while (ch != 10 && timer <= 100) //enter or 5s
-    {
-        // Handle user input
-        if (keyhit()) 
-        {
-            ch = readch();
-            printKey(ch);
-            screenUpdate();
-        }
-
-        // Update game state (move elements, verify collision, etc)
-        if (timerTimeOver() == 1)
-        {
-            int newX = x + incX;
-            if (newX >= (MAXX -strlen("Hello World") -1) || newX <= MINX+1) incX = -incX;
-            int newY = y + incY;
-            if (newY >= MAXY-1 || newY <= MINY+1) incY = -incY;
-
-            printHello(newX, newY);
-
-            screenUpdate();
-            timer++;
-        }
-    }
-
-    keyboardDestroy();
-    screenDestroy();
-    timerDestroy();
+   
+    int opcao;
+    printf("\n1. Ver Ranking\n2. Limpar Ranking\n3. Sair\nEscolha: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) mostrar_ranking();
+    else if (opcao == 2) limpar_ranking();
 
     return 0;
 }
