@@ -9,6 +9,14 @@ typedef struct {
     int locais[USADOS_POR_CATEGORIA];
 } ItensUsados;
 
+typedef struct {
+    int suspeitos; 
+    int armas;
+    int locais;
+} ItensChute;
+
 void gerar_rodada(ItensUsados *itens);
+
+int validar_resultado(ItensChute *chute, ItensUsados *itens);
 
 #endif

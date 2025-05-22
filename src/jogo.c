@@ -33,3 +33,17 @@ void gerar_rodada(ItensUsados *itens) {
         itens->locais[i] = sortear_unico(itens->locais, i, TOTAL_LOCAIS);
     }
 }
+
+int validar_resultado(ItensChute *chute, ItensUsados *itens){
+    int acertos = 0;
+    if (chute->armas == itens->armas[0]){
+        acertos++;
+    }
+    if (chute->suspeitos == itens->suspeitos[0]){
+        acertos++;
+    }
+    if (chute->locais == itens->locais[0]){
+        acertos++;
+    }
+    return acertos;
+}
