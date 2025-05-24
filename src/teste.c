@@ -1,3 +1,5 @@
+// Arquivo para testar as criacao de pistas. usar como base quando for integrar na Main.
+
 #include "../include/jogo.h"
 #include "../include/pistas.h"
 #include <stdio.h>

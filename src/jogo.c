@@ -3,6 +3,7 @@
 #include "jogo.h"
 #include "dados.h"
 
+// função que sorteia valores não repetidos para a rodada
 static int sortear_unico(int *existentes, int quantidade, int max) {
     int valor, repetido;
     do {
@@ -18,6 +19,7 @@ static int sortear_unico(int *existentes, int quantidade, int max) {
     return valor;
 }
 
+// Função que recebe o ponteiro onde serão armazenado os itens da rodada e retorna os itens sorteados
 void gerar_rodada(ItensUsados *itens) {
     srand(time(NULL));
 
@@ -34,6 +36,8 @@ void gerar_rodada(ItensUsados *itens) {
     }
 }
 
+// funcao que recebe um objeto com os itens chutados pelo jogador e o gabarito do jogo e compara.
+// OBS: O gabarito sempre será o item zero do vetor de itens usados.
 int validar_resultado(ItensChute *chute, ItensUsados *itens){
     int acertos = 0;
     if (chute->armas == itens->armas[0]){

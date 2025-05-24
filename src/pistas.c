@@ -11,6 +11,7 @@ void criar_pista(Pista* pista, TipoPista tipo, const char* formato, const char* 
         snprintf(pista->texto, sizeof(pista->texto), formato, s1);
 }
 
+// Recebe um vetor de pistas e a lista dos itens sorteados para a rodada e retorna a lista de pistas.
 void gerar_pistas(Pista pistas[12], ItensUsados itens) {
     criar_pista(&pistas[0], TIPO_NEGACAO, "O local não foi %s.", NOMES_LOCAIS[itens.locais[2]], NULL);
     criar_pista(&pistas[1], TIPO_NEGACAO, "O assassino não foi %s.", NOMES_SUSPEITOS[itens.suspeitos[1]], NULL);

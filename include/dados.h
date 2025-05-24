@@ -18,8 +18,8 @@ static const char* NOMES_ARMAS[] = {
 };
 
 static const char* NOMES_LOCAIS[] = {
-    "Biblioteca", "Cozinha", "Salão de Festas",
-    "Jardim", "Escritório", "Quarto"
+    "Biblioteca", "Garagino", "Copa",
+    "Auditório", "Sala 401", "Sala dos professores"
 };
 
 #endif
