@@ -3,6 +3,7 @@
 #include "timer.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 #define MAP_WIDTH 80
 #define MAP_HEIGHT 20
@@ -20,16 +21,23 @@ typedef struct tamanhoSala {
 } tamanhoSala;
 
 void showDialog(const char *text) {
-  screenSetColor(WHITE, BLUE); // Texto branco sobre fundo azul
-  // Limpa a área de diálogo (3 linhas abaixo do mapa)
-  for (int y = MAP_HEIGHT; y < MAP_HEIGHT + 3; y++) {
+  screenSetColor(WHITE, BLACK);
+  for (int y = MAP_HEIGHT; y < MAP_HEIGHT + 5; y++) {
     for (int x = 0; x < MAP_WIDTH; x++) {
       screenGotoxy(x, y);
+      if (y == MAP_HEIGHT) {
+        if (x == 2)
+          printf("| Dicas encontradas no local |");
+
+        if (x < 2 || x > 1 + strlen("| Dicas encontradas no local |"))
+          printf("=");
+        continue;
+      }
+
       printf(" ");
     }
   }
-
-  screenGotoxy(1, MAP_HEIGHT + 1);
+  screenGotoxy(1, MAP_HEIGHT + 2);
   printf("%s", text);
 }
 
