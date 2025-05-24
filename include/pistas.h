@@ -12,6 +12,7 @@ typedef enum {
 typedef struct {
     TipoPista tipo;
     char texto[128];
+    int id;
 } Pista;
 
 

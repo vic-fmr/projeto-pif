@@ -8,13 +8,13 @@
 #define USADOS_POR_CATEGORIA 3
 
 static const char* NOMES_SUSPEITOS[] = {
-    "Srta. Rosa", "Coronel Mostarda", "Rev. Green",
-    "Dona Branca", "Sr. Marinho", "Prof. Black"
+    "Camila", "Sofia", "Lucas",
+    "Victor", "René", "Prof. Guilherme"
 };
 
 static const char* NOMES_ARMAS[] = {
-    "Castiçal", "Faca", "Revólver",
-    "Corda", "Veneno", "Chave Inglesa"
+    "Crachá", "Calculadora", "Lanche envenenado",
+    "Pistola", "Faca", "Arduino"
 };
 
 static const char* NOMES_LOCAIS[] = {
