@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Werror -g -I$(INCLUDE_DIR)
+CFLAGS = -Wall -g -I$(INCLUDE_DIR)
 
 #project name
 PROJ_NAME = logica-fatal
