@@ -1,89 +1,138 @@
-/**
- * main.h
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
+#include <stdio.h>
+#include <stdlib.h> // Para system()
+#include <termios.h>
+#include <unistd.h> // Para STDIN_FILENO, getch (read)
 
-#include <string.h>
+// Constantes para as pistas
+#define NUM_PISTAS 3
+const char *pistas[NUM_PISTAS] = {
+    "A porta da cozinha range.",
+    "O mordomo estava na biblioteca.",
+    "Ha uma chave no jardim." // Removido acento para compatibilidade simples de console
+};
 
-#include "screen.h"
-#include "keyboard.h"
-#include "timer.h"
+// Protótipos das funções
+char getch();
+void esconderCaderno();
+void mostrarListaPistas();
+void mostrarPistaDetalhada(int indicePista);
+void gerenciarCaderno();
 
-int x = 34, y = 12;
-int incX = 1, incY = 1;
-
-void printHello(int nextX, int nextY)
-{
-    screenSetColor(CYAN, DARKGRAY);
-    screenGotoxy(x, y);
-    printf("           ");
-    x = nextX;
-    y = nextY;
-    screenGotoxy(x, y);
-    printf("Hello World");
+// Função para capturar um caractere sem precisar pressionar Enter
+char getch() {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
 }
 
-void printKey(int ch)
-{
-    screenSetColor(YELLOW, DARKGRAY);
-    screenGotoxy(35, 22);
-    printf("Key code :");
+// Função para "esconder" o caderno e mostrar o estado do jogo
+void esconderCaderno() {
+    system("clear");
+    printf("Jogo rodando... Pressione 'C' para abrir o caderno.\n");
+}
 
-    screenGotoxy(34, 23);
-    printf("            ");
+// Função para mostrar a lista de pistas selecionáveis
+void mostrarListaPistas() {
+    system("clear");
+    printf("=====================================\n");
+    printf("|       CADERNO DE PISTAS           |\n");
+    printf("=====================================\n");
+    printf("| Selecione uma pista para ver:     |\n");
+    for (int i = 0; i < NUM_PISTAS; ++i) {
+        // Ajusta o espaçamento para manter o layout
+        printf("| %d. Pista %-26d|\n", i + 1, i + 1);
+    }
+    printf("|                                   |\n");
+    printf("| Pressione 'C' para fechar.        |\n");
+    printf("=====================================\n");
+}
+
+// Função para mostrar uma pista específica em detalhe
+void mostrarPistaDetalhada(int indicePista) {
+    system("clear");
+    printf("=====================================\n");
+    printf("|           PISTA DETALHADA         |\n");
+    printf("=====================================\n");
+    printf("|                                   |\n");
     
-    if (ch == 27) screenGotoxy(36, 23);
-    else screenGotoxy(39, 23);
-
-    printf("%d ", ch);
-    while (keyhit())
-    {
-        printf("%d ", readch());
-    }
+    char texto_pista_formatado[100];
+    // Adiciona " - " antes da pista, como no original
+    snprintf(texto_pista_formatado, sizeof(texto_pista_formatado), " - %s", pistas[indicePista]);
+    // %-33s garante que o texto seja alinhado à esquerda e ocupe 33 caracteres
+    // (se for menor, preenche com espaços; se for maior, pode quebrar o layout)
+    printf("| %-33s |\n", texto_pista_formatado); 
+    
+    printf("|                                   |\n");
+    printf("| Pressione 'V' para voltar a lista.|\n");
+    printf("| Pressione 'C' para fechar.        |\n");
+    printf("=====================================\n");
 }
 
-int main() 
-{
-    static int ch = 0;
-    static long timer = 0;
+// Função para gerenciar a navegação dentro do caderno de pistas
+void gerenciarCaderno() {
+    char opcaoCaderno;
+    // 0: mostrando lista de pistas, 1: mostrando pista detalhada
+    int estadoInternoCaderno = 0; 
+    int pistaSelecionadaIndex = -1;
 
-    screenInit(1);
-    keyboardInit();
-    timerInit(50);
+    mostrarListaPistas(); // Começa mostrando a lista
 
-    printHello(x, y);
-    screenUpdate();
+    while (1) {
+        opcaoCaderno = getch();
 
-    while (ch != 10 && timer <= 100) //enter or 5s
-    {
-        // Handle user input
-        if (keyhit()) 
-        {
-            ch = readch();
-            printKey(ch);
-            screenUpdate();
-        }
-
-        // Update game state (move elements, verify collision, etc)
-        if (timerTimeOver() == 1)
-        {
-            int newX = x + incX;
-            if (newX >= (MAXX -strlen("Hello World") -1) || newX <= MINX+1) incX = -incX;
-            int newY = y + incY;
-            if (newY >= MAXY-1 || newY <= MINY+1) incY = -incY;
-
-            printHello(newX, newY);
-
-            screenUpdate();
-            timer++;
+        if (estadoInternoCaderno == 0) { // Se está na lista de pistas
+            if (opcaoCaderno >= '1' && opcaoCaderno < ('1' + NUM_PISTAS)) {
+                pistaSelecionadaIndex = opcaoCaderno - '1';
+                mostrarPistaDetalhada(pistaSelecionadaIndex);
+                estadoInternoCaderno = 1; // Muda para o estado de mostrar detalhe
+            } else if (opcaoCaderno == 'c' || opcaoCaderno == 'C') {
+                break; // Sai do loop do caderno
+            }
+        } else if (estadoInternoCaderno == 1) { // Se está mostrando uma pista detalhada
+            if (opcaoCaderno == 'v' || opcaoCaderno == 'V') {
+                mostrarListaPistas();
+                estadoInternoCaderno = 0; // Volta para a lista
+                pistaSelecionadaIndex = -1;
+            } else if (opcaoCaderno == 'c' || opcaoCaderno == 'C') {
+                break; // Sai do loop do caderno
+            }
         }
     }
+    esconderCaderno(); // Ao sair, "fecha" o caderno e limpa a tela
+}
 
-    keyboardDestroy();
-    screenDestroy();
-    timerDestroy();
+int main() {
+    char tecla;
+    esconderCaderno(); // Estado inicial do jogo
+
+    while (1) {
+        tecla = getch();
+
+        if (tecla == 'c' || tecla == 'C') {
+            // 'C' agora abre o caderno e entra no modo de gerenciamento
+            // A função gerenciarCaderno só retorna quando o usuário decide fechar o caderno por dentro dela
+            gerenciarCaderno(); 
+        }
+
+        // Tecla Esc para sair do jogo (opcional, mantido do original)
+        if (tecla == 27) { 
+            break;
+        }
+        // Outras teclas pressionadas no "jogo" poderiam ser tratadas aqui
+    }
+
+    // Restaura configurações do terminal (importante se o jogo terminasse abruptamente)
+    struct termios oldt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    oldt.c_lflag |= (ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    system("clear"); // Limpa a tela ao sair
 
     return 0;
 }
