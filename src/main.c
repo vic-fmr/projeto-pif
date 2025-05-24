@@ -1,93 +1,93 @@
-/**
- * main.h
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
+// /**
+//  * main.h
+//  * Created on Aug, 23th 2023
+//  * Author: Tiago Barros
+//  * Based on "From C to C++ course - 2002"
+// */
 
-#include <string.h>
+// #include <string.h>
 
-#include "screen.h"
-#include "keyboard.h"
-#include "timer.h"
+// #include "screen.h"
+// #include "keyboard.h"
+// #include "timer.h"
 
-#include "caderno.h"
+// #include "caderno.h"
 
-int x = 34, y = 12;
-int incX = 1, incY = 1;
+// int x = 34, y = 12;
+// int incX = 1, incY = 1;
 
-void printHello(int nextX, int nextY)
-{
-    screenSetColor(CYAN, DARKGRAY);
-    screenGotoxy(x, y);
-    printf("           ");
-    x = nextX;
-    y = nextY;
-    screenGotoxy(x, y);
-    printf("Hello World");
-}
+// void printHello(int nextX, int nextY)
+// {
+//     screenSetColor(CYAN, DARKGRAY);
+//     screenGotoxy(x, y);
+//     printf("           ");
+//     x = nextX;
+//     y = nextY;
+//     screenGotoxy(x, y);
+//     printf("Hello World");
+// }
 
-void printKey(int ch)
-{
-    screenSetColor(YELLOW, DARKGRAY);
-    screenGotoxy(35, 22);
-    printf("Key code :");
+// void printKey(int ch)
+// {
+//     screenSetColor(YELLOW, DARKGRAY);
+//     screenGotoxy(35, 22);
+//     printf("Key code :");
 
-    screenGotoxy(34, 23);
-    printf("            ");
-    
-    if (ch == 27) screenGotoxy(36, 23);
-    else screenGotoxy(39, 23);
+//     screenGotoxy(34, 23);
+//     printf("            ");
 
-    printf("%d ", ch);
-    while (keyhit())
-    {
-        printf("%d ", readch());
-    }
-}
+//     if (ch == 27) screenGotoxy(36, 23);
+//     else screenGotoxy(39, 23);
 
-int main() 
-{
-    static int ch = 0;
-    static long timer = 0;
+//     printf("%d ", ch);
+//     while (keyhit())
+//     {
+//         printf("%d ", readch());
+//     }
+// }
 
-    screenInit(1);
-    keyboardInit();
-    timerInit(50);
+// int main()
+// {
+//     static int ch = 0;
+//     static long timer = 0;
 
-    init_caderno();
+//     screenInit(1);
+//     keyboardInit();
+//     timerInit(50);
 
-    printHello(x, y);
-    screenUpdate();
+//     init_caderno();
 
-    while (ch != 10 && timer <= 100) //enter or 5s
-    {
-        // Handle user input
-        if (keyhit()) 
-        {
-            ch = readch();
-            printKey(ch);
-            screenUpdate();
-        }
+//     printHello(x, y);
+//     screenUpdate();
 
-        // Update game state (move elements, verify collision, etc)
-        if (timerTimeOver() == 1)
-        {
-            int newX = x + incX;
-            if (newX >= (MAXX -strlen("Hello World") -1) || newX <= MINX+1) incX = -incX;
-            int newY = y + incY;
-            if (newY >= MAXY-1 || newY <= MINY+1) incY = -incY;
+//     while (ch != 10 && timer <= 100) //enter or 5s
+//     {
+//         // Handle user input
+//         if (keyhit())
+//         {
+//             ch = readch();
+//             printKey(ch);
+//             screenUpdate();
+//         }
 
-            printHello(newX, newY);
+//         // Update game state (move elements, verify collision, etc)
+//         if (timerTimeOver() == 1)
+//         {
+//             int newX = x + incX;
+//             if (newX >= (MAXX -strlen("Hello World") -1) || newX <= MINX+1)
+//             incX = -incX; int newY = y + incY; if (newY >= MAXY-1 || newY <=
+//             MINY+1) incY = -incY;
 
-            screenUpdate();
-            timer++;
-        }
-    }
+//             printHello(newX, newY);
 
-    keyboardDestroy();
-    screenDestroy();
-    timerDestroy();
+//             screenUpdate();
+//             timer++;
+//         }
+//     }
 
-    return 0;
-}
+//     keyboardDestroy();
+//     screenDestroy();
+//     timerDestroy();
+
+//     return 0;
+// }
