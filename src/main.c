@@ -183,6 +183,7 @@ int main() {
   Pista pistas[12];
   gerar_rodada(&itens);
   gerar_pistas(pistas, itens);
+  embaralhar_pistas(pistas);
 
   tamanhoSala tamanhoAuditorio = {1, 19, 1, 4};
   tamanhoSala tamanhoBiblioteca = {21, 59, 1, 4};
@@ -223,9 +224,11 @@ int main() {
         } else if (verificarSala(tamanhoSala401, pistas[2].texto, pistas[9].texto)) {
         } else if (verificarSala(tamanhoCopa, pistas[3].texto, "")) {
         } else if (verificarSala(tamanhoGaragino, pistas[4].texto, pistas[10].texto)) {
+
         } else if (verificarSala(tamanhoSalaProf, pistas[5].texto, "")) {
         } else if (verificarSala(tamanhoSalaTI, pistas[6].texto, "")) {
         } else if (verificarSala(tamanhoPraca, pistas[7].texto, pistas[11].texto)) {
+
         } else {
           showDialog(" ", " ");
         }
