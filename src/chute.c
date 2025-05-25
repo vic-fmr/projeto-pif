@@ -1,6 +1,16 @@
 #include "chute.h"
 #include <string.h>
 
+void limpar_area_modal(int x, int y, int width, int height) {
+  screenSetColor(WHITE, BLACK);
+  for (int j = 0; j < height; j++) {
+    screenGotoxy(x, y + j);
+    for (int i = 0; i < width; i++) {
+      printf(" ");
+    }
+  }
+}
+
 static void desenhar_moldura(int x, int y, int width, int height) {
   screenGotoxy(x, y);
   printf("┌");
@@ -34,6 +44,7 @@ static void centralizar_texto(int y, const char *texto, int modal_x) {
 }
 
 ItensChute obter_chute_jogador(const ItensUsados *itens) {
+
   ItensChute chute = {-1, -1, -1};
   int categoria_atual = 0;
   int selecao = 0;
@@ -44,40 +55,34 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
     int modal_x = MINX + (screen_width - MODAL_WIDTH) / 2;
     int modal_y = 2;
 
-    // Limpa a tela
-    screenClear();
-
+    limpar_area_modal(modal_x, modal_y, MODAL_WIDTH, MODAL_HEIGHT);
     desenhar_moldura(modal_x, modal_y, MODAL_WIDTH, MODAL_HEIGHT);
 
     const char *titulo;
     const char **opcoes;
-    int num_opcoes;
     const int *indices;
 
     switch (categoria_atual) {
     case 0:
       titulo = "SELECIONE O SUSPEITO";
       opcoes = NOMES_SUSPEITOS;
-      num_opcoes = TOTAL_SUSPEITOS;
       indices = itens->suspeitos;
       break;
     case 1:
       titulo = "SELECIONE A ARMA";
       opcoes = NOMES_ARMAS;
-      num_opcoes = TOTAL_ARMAS;
       indices = itens->armas;
       break;
     case 2:
       titulo = "SELECIONE O LOCAL";
       opcoes = NOMES_LOCAIS;
-      num_opcoes = TOTAL_LOCAIS;
       indices = itens->locais;
       break;
     }
 
     centralizar_texto(modal_y + 1, titulo, modal_x);
 
-    for (int i = 0; i < num_opcoes; i++) {
+    for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
       screenGotoxy(modal_x + 2, modal_y + 3 + i);
       if (i == selecao)
         screenSetColor(BLACK, WHITE);
@@ -104,7 +109,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
             tecla = readch();
             if (tecla == 65 && selecao > 0)
               selecao--;
-            else if (tecla == 66 && selecao < num_opcoes - 1)
+            else if (tecla == 66 && selecao < USADOS_POR_CATEGORIA - 1)
               selecao++;
           } else {
             // Tecla ESC real
@@ -143,8 +148,7 @@ void mostrar_resultado_chute(int acertos) {
   int modal_x = MINX + (MAXX - MINX - MODAL_WIDTH) / 2;
   int modal_y = 2;
 
-  screenClear();
-
+  limpar_area_modal(modal_x, modal_y, MODAL_WIDTH, MODAL_HEIGHT);
   desenhar_moldura(modal_x, modal_y, MODAL_WIDTH, MODAL_HEIGHT);
   centralizar_texto(modal_y + 1, "RESULTADO", modal_x);
 

@@ -3,6 +3,7 @@
 #include "jogo.h"
 #include "screen.h"
 #include "dados.h"
+#include "math.h"
 
 // função que sorteia valores não repetidos para a rodada
 static int sortear_unico(int *existentes, int quantidade, int max) {

@@ -5,6 +5,16 @@
 #include "keyboard.h"
 #include <ctype.h>
 
+void pintar_fundo(int largura, int altura, int cor_fundo) {
+  screenSetColor(cor_fundo, cor_fundo);
+  for (int y = 0; y < altura; y++) {
+    screenGotoxy(0, y);
+    for (int x = 0; x < largura; x++) {
+      printf(" ");
+    }
+  }
+}
+
 void tela_inicial() {
   const char *arte[] = {"░▒▓█▓▒░      ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░       "
                         "░▒▓████████▓▒░▒▓██████▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░        ",
@@ -25,6 +35,7 @@ void tela_inicial() {
                         "                              Pressione ENTER para começar..."};
 
   screenClear();
+  pintar_fundo(150, 25, BLACK);
   screenSetColor(WHITE, BLACK);
 
   int linhas = sizeof(arte) / sizeof(arte[0]);
@@ -48,6 +59,7 @@ int nome_valido(const char *nome) {
 
 void mostrar_instrucoes(char *nome_jogador) {
   screenClear();
+  pintar_fundo(150, 25, BLACK);
   screenSetColor(WHITE, BLACK);
 
   screenGotoxy(20, 2);
@@ -82,7 +94,7 @@ void mostrar_instrucoes(char *nome_jogador) {
   screenGotoxy(12, 19);
   printf("D - mover para direita");
   screenGotoxy(12, 20);
-  printf("B - abrir bloco de dicas");
+  printf("C - chutar uma solução");
 
   int tentativa = 0;
   do {
