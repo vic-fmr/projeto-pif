@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -I./include
 SRC = $(wildcard src/**/*.c) $(wildcard src/*.c)
-TARGET = jogo
+TARGET = build
 
 all: $(TARGET)
 
@@ -12,4 +12,4 @@ run: all
 	./$(TARGET)
 
 clean:
-	rm -f $(TARGET)
+	rm -rf $(TARGET)
