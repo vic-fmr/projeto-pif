@@ -7,7 +7,7 @@ int playerY = 12;
 
 void drawPlayer() {
   screenGotoxy(playerX, playerY);
-  screenSetColor(RED, BLACK);
+  screenSetColor(YELLOW, BLACK);
   printf("o");
 }
 

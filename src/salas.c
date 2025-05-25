@@ -17,7 +17,7 @@ void initNomesNasSalas() {
   desenharNomeNoMapa(tamanhoBiblioteca.Xinicial + 10, 2, "BIBLIOTECA");
   desenharNomeNoMapa(tamanhoSala401.Xinicial + 5, 2, "SALA 401");
   desenharNomeNoMapa(tamanhoCopa.Xinicial + 10, 10, "COPA");
-  desenharNomeNoMapa(tamanhoGaragino.Xinicial + 10, MAP_HEIGHT - 3, "GARAGINO");
+  desenharNomeNoMapa(tamanhoGaragino.Xinicial + 8, MAP_HEIGHT - 3, "GARAGINO");
   desenharNomeNoMapa(tamanhoSalaProf.Xinicial + 10, MAP_HEIGHT - 3, "SALA DOS PROFESSORES");
   desenharNomeNoMapa(tamanhoSalaTI.Xinicial + 4, MAP_HEIGHT - 3, "SALA DE TI");
   desenharNomeNoMapa(tamanhoPraca.Xinicial + 4, 10, "PRACA");

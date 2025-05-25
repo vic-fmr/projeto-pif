@@ -1,4 +1,5 @@
 #include "player.h"
+#include "jogo.h"
 #include "mapa.h"
 #include "salas.h"
 #include "dialogo.h"
@@ -6,9 +7,16 @@
 #include "screen.h"
 #include "keyboard.h"
 #include "timer.h"
+#include "ui.h"
+#include "chute.h"
 
 int main() {
   int ch = 0;
+  char nome[50];
+
+  tela_inicial();
+  mostrar_instrucoes(nome);
+
   screenInit(1);
   keyboardInit();
   timerInit(50);
@@ -26,6 +34,26 @@ int main() {
   while (ch != 27) {
     if (keyhit()) {
       ch = readch();
+
+      if (ch == 'c') { // Tecla para abrir o chute
+        ItensChute chute = obter_chute_jogador(&itens);
+        if (chute.suspeitos != -1) { // Se não cancelou
+          int acertos = validar_resultado(&chute, &itens);
+          mostrar_resultado_chute(acertos);
+
+          if (acertos == 3) {
+            // Vitória!
+            break;
+          }
+        }
+
+        // Redesenha o jogo após chute
+        screenClear();
+        drawMap();
+        drawPlayer();
+        screenUpdate();
+      }
+
       int newX = playerX;
       int newY = playerY;
 

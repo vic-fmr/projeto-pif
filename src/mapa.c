@@ -16,6 +16,8 @@ void desenharNomeNoMapa(int x, int y, const char *nome) {
 void initMap() {
   for (int y = 0; y < MAP_HEIGHT; y++) {
     for (int x = 1; x < MAP_WIDTH; x++) {
+
+      // Paredes internas
       if (x == 20 || x == MAP_WIDTH - 20) {
         map[y][x] = '|';
       } else if (y == 5 || y == MAP_HEIGHT - 5) {
@@ -24,12 +26,17 @@ void initMap() {
         map[y][x] = ' ';
       }
 
+      // Portas
       if (x == 5 || x == 6 || x == 31 || x == 32 || x == MAP_WIDTH - 4 || x == MAP_WIDTH - 5) {
         map[y][x] = ' ';
       }
       if (y == 2 || y == 10 || y == MAP_HEIGHT - 2) {
         map[y][x] = ' ';
       }
+
+      // Bordas externas
+      if (x == 1 || x == MAP_WIDTH - 1) map[y][x] = '|';
+      if (y == 1 || y == MAP_HEIGHT - 1) map[y][x] = '-';
     }
   }
   initNomesNasSalas();
