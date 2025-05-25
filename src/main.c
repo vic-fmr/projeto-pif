@@ -6,11 +6,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include "ui.h"
+
 
 #define MAP_WIDTH 80
 #define MAP_HEIGHT 20
 
 char map[MAP_HEIGHT][MAP_WIDTH];
+
+char nome[50];
 
 int playerX = 40;
 int playerY = 12;
@@ -161,6 +165,9 @@ bool verificarSala(tamanhoSala sala, const char *clue1, const char *clue2) {
 }
 
 int main() {
+  tela_inicial(); // sua função atual
+  mostrar_instrucoes(nome);
+
   int ch = 0;
   screenInit(1);
   keyboardInit();
@@ -215,9 +222,9 @@ int main() {
         } else if (verificarSala(tamanhoBiblioteca, pistas[1].texto, " ")) {
         } else if (verificarSala(tamanhoSala401, pistas[2].texto, pistas[9].texto)) {
         } else if (verificarSala(tamanhoCopa, pistas[3].texto, "")) {
-        } else if (verificarSala(tamanhoGaragino, pistas[4].texto, " ")) {
-        } else if (verificarSala(tamanhoSalaProf, pistas[5].texto, pistas[10].texto)) {
-        } else if (verificarSala(tamanhoSalaTI, pistas[6].texto, " ")) {
+        } else if (verificarSala(tamanhoGaragino, pistas[4].texto, pistas[10].texto)) {
+        } else if (verificarSala(tamanhoSalaProf, pistas[5].texto, "")) {
+        } else if (verificarSala(tamanhoSalaTI, pistas[6].texto, "")) {
         } else if (verificarSala(tamanhoPraca, pistas[7].texto, pistas[11].texto)) {
         } else {
           showDialog(" ", " ");
