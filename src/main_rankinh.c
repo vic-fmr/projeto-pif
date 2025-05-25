@@ -2,7 +2,7 @@
 #include "temporizador.h"
 #include <stdio.h>
 
-int main() {
+int mainRanking() {
   char nome[50];
   time_t inicio;
   int acertou;
