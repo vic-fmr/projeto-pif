@@ -1,6 +1,7 @@
 #include "chute.h"
 #include "ranking.h"
 #include <string.h>
+#include <stdlib.h>
 
 void limpar_area_modal(int x, int y, int width, int height) {
   screenSetColor(WHITE, BLACK);
@@ -63,6 +64,8 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
     const char **opcoes;
     const int *indices;
 
+    static int embaralhado[USADOS_POR_CATEGORIA];
+
     switch (categoria_atual) {
     case 0:
       titulo = "SELECIONE O SUSPEITO";
@@ -81,6 +84,17 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
       break;
     }
 
+    for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
+      embaralhado[i] = indices[i];
+    }
+
+    for (int i = USADOS_POR_CATEGORIA - 1; i > 0; i--) {
+      int j = rand() % (i + 1);
+      int temp = embaralhado[i];
+      embaralhado[i] = embaralhado[j];
+      embaralhado[j] = temp;
+    }
+
     centralizar_texto(modal_y + 1, titulo, modal_x);
 
     for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
@@ -89,7 +103,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
         screenSetColor(BLACK, WHITE);
       else
         screenSetColor(WHITE, BLACK);
-      printf("%s", opcoes[indices[i]]);
+      printf("%s", opcoes[embaralhado[i]]);
     }
     screenSetColor(WHITE, BLACK);
 
@@ -124,13 +138,13 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
         } else if (tecla == '\n' || tecla == 10 || tecla == 13) {
           switch (categoria_atual) {
           case 0:
-            chute.suspeitos = indices[selecao];
+            chute.suspeitos = embaralhado[selecao];
             break;
           case 1:
-            chute.armas = indices[selecao];
+            chute.armas = embaralhado[selecao];
             break;
           case 2:
-            chute.locais = indices[selecao];
+            chute.locais = embaralhado[selecao];
             break;
           }
           categoria_atual++;
