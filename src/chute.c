@@ -1,4 +1,5 @@
 #include "chute.h"
+#include "ranking.h"
 #include <string.h>
 
 void limpar_area_modal(int x, int y, int width, int height) {
@@ -144,7 +145,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
   return chute;
 }
 
-void mostrar_resultado_chute(int acertos) {
+void mostrar_resultado_chute(int acertos, const char *nome, double tempo) {
   int modal_x = MINX + (MAXX - MINX - MODAL_WIDTH) / 2;
   int modal_y = 2;
 
@@ -153,18 +154,27 @@ void mostrar_resultado_chute(int acertos) {
   centralizar_texto(modal_y + 1, "RESULTADO", modal_x);
 
   if (acertos == 3) {
+    salvar_ranking(nome, tempo);
+
     screenSetColor(GREEN, BLACK);
     screenGotoxy(modal_x + 5, modal_y + 3);
     printf("Parabéns! Caso resolvido!");
+
+    screenSetColor(WHITE, BLACK);
+    screenGotoxy(modal_x + 5, modal_y + MODAL_HEIGHT - 2);
+    printf("Pressione Enter para ver o ranking...");
+
+    getchar();
+    mostrar_ranking();
   } else {
     screenSetColor(YELLOW, BLACK);
     screenGotoxy(modal_x + 5, modal_y + 3);
     printf("Acertou %d/3. Continue!", acertos);
+    screenSetColor(WHITE, BLACK);
+    screenGotoxy(modal_x + 5, modal_y + MODAL_HEIGHT - 2);
+    printf("Pressione qualquer tecla...");
   }
 
-  screenSetColor(WHITE, BLACK);
-  screenGotoxy(modal_x + 5, modal_y + MODAL_HEIGHT - 2);
-  printf("Pressione qualquer tecla...");
   screenUpdate();
 
   while (!keyhit())

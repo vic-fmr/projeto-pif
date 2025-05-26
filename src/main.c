@@ -9,13 +9,17 @@
 #include "timer.h"
 #include "ui.h"
 #include "chute.h"
+#include "temporizador.h"
+#include "ranking.h"
 
 int main() {
   int ch = 0;
   char nome[50];
+  time_t inicio = time(NULL);
 
   tela_inicial();
   mostrar_instrucoes(nome);
+  // 'inicio();'
 
   screenInit(1);
   keyboardInit();
@@ -24,6 +28,7 @@ int main() {
   initMap();
   drawMap();
   drawPlayer();
+  // iniciar_temporizador(&inicioTempo);
   screenUpdate();
 
   ItensUsados itens;
@@ -38,10 +43,15 @@ int main() {
       if (ch == 'c') { // Tecla para abrir o chute
         ItensChute chute = obter_chute_jogador(&itens);
         if (chute.suspeitos != -1) { // Se não cancelou
-          int acertos = validar_resultado(&chute, &itens);
-          mostrar_resultado_chute(acertos);
 
+          time_t fim = time(NULL);
+          double duracao = difftime(fim, inicio);
+          int acertos = validar_resultado(&chute, &itens);
+          mostrar_resultado_chute(acertos, nome, duracao);
           if (acertos == 3) {
+            // double tempo = parar_temporizador(inicio);
+            // salvar_ranking(nome, tempo);
+
             // Vitória!
             break;
           }

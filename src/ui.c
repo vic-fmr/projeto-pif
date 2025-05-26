@@ -5,6 +5,8 @@
 #include "keyboard.h"
 #include <ctype.h>
 
+#define ARQUIVO_RANKING "ranking.csv"
+
 void pintar_fundo(int largura, int altura, int cor_fundo) {
   screenSetColor(cor_fundo, cor_fundo);
   for (int y = 0; y < altura; y++) {
@@ -35,7 +37,7 @@ void tela_inicial() {
                         "                              Pressione ENTER para começar..."};
 
   screenClear();
-  pintar_fundo(150, 25, BLACK);
+  pintar_fundo(150, 45, BLACK);
   screenSetColor(WHITE, BLACK);
 
   int linhas = sizeof(arte) / sizeof(arte[0]);
@@ -59,7 +61,7 @@ int nome_valido(const char *nome) {
 
 void mostrar_instrucoes(char *nome_jogador) {
   screenClear();
-  pintar_fundo(150, 25, BLACK);
+  pintar_fundo(150, 45, BLACK);
   screenSetColor(WHITE, BLACK);
 
   screenGotoxy(20, 2);
