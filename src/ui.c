@@ -64,12 +64,27 @@ void mostrar_instrucoes(char *nome_jogador) {
   pintar_fundo(150, 45, BLACK);
   screenSetColor(WHITE, BLACK);
 
-  screenGotoxy(20, 2);
-  printf("====================================================");
-  screenGotoxy(20, 3);
-  printf("              LÓGICA FATAL - MISSÃO                ");
-  screenGotoxy(20, 4);
-  printf("====================================================");
+  // Desenhar borda ao redor da tela
+  for (int x = 5; x < 75; x++) {
+    screenGotoxy(x, 29);
+    printf("_");
+  }
+  for (int y = 2; y <= 29; y++) {
+    screenGotoxy(5, y);
+    printf("|");
+    screenGotoxy(75, y);
+    printf("|");
+  }
+
+  for (int x = 6; x < 75; x++) {
+    screenGotoxy(x, 2);
+    printf("=");
+    screenGotoxy(x, 4);
+    printf("=");
+  }
+
+  screenGotoxy(30, 3);
+  printf("LÓGICA FATAL - MISSÃO");
 
   screenSetColor(LIGHTGRAY, BLACK);
   screenGotoxy(10, 6);
@@ -77,25 +92,25 @@ void mostrar_instrucoes(char *nome_jogador) {
 
   screenGotoxy(10, 8);
   printf("O Professor Diego foi encontrado sem vida em uma das salas.");
-  screenGotoxy(10, 10);
+  screenGotoxy(10, 9);
   printf("Cabe a VOCÊ descobrir quem cometeu esse crime, com qual");
-  screenGotoxy(10, 11);
+  screenGotoxy(10, 10);
   printf("arma e em qual local. Use as pistas lógicas para resolver!");
 
-  screenGotoxy(10, 14);
+  screenGotoxy(10, 12);
   screenSetColor(CYAN, BLACK);
   printf(">> COMANDOS DO JOGO:");
 
   screenSetColor(LIGHTGRAY, BLACK);
-  screenGotoxy(12, 16);
+  screenGotoxy(12, 14);
   printf("W - mover para cima");
-  screenGotoxy(12, 17);
+  screenGotoxy(12, 15);
   printf("A - mover para esquerda");
-  screenGotoxy(12, 18);
+  screenGotoxy(12, 16);
   printf("S - mover para baixo");
-  screenGotoxy(12, 19);
+  screenGotoxy(12, 17);
   printf("D - mover para direita");
-  screenGotoxy(12, 20);
+  screenGotoxy(12, 18);
   printf("C - chutar uma solução");
 
   int tentativa = 0;
@@ -109,15 +124,15 @@ void mostrar_instrucoes(char *nome_jogador) {
     }
 
     screenSetColor(WHITE, BLACK);
-    screenGotoxy(10, 23);
+    screenGotoxy(10, 20);
     printf("Digite seu nome para começar:                     ");
-    screenGotoxy(10, 24);
+    screenGotoxy(10, 21);
     fgets(nome_jogador, 50, stdin);
     nome_jogador[strcspn(nome_jogador, "\n")] = '\0';
 
     if (!nome_valido(nome_jogador)) {
       screenSetColor(RED, BLACK);
-      screenGotoxy(10, 25);
+      screenGotoxy(10, 23);
       printf("Nome inválido. Tente novamente.");
     }
 
@@ -125,7 +140,7 @@ void mostrar_instrucoes(char *nome_jogador) {
   } while (!nome_valido(nome_jogador));
 
   screenSetColor(WHITE, BLACK);
-  screenGotoxy(10, 27);
+  screenGotoxy(10, 22);
   printf("Bem-vindo, %s! Pressione ENTER para iniciar a investigação!", nome_jogador);
   getchar();
 }

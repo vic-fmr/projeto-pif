@@ -35,6 +35,7 @@ int main() {
   Pista pistas[12];
   gerar_rodada(&itens);
   gerar_pistas(pistas, itens);
+  embaralhar_pistas(pistas);
 
   while (ch != 27) {
     if (keyhit()) {
