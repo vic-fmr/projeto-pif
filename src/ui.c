@@ -7,16 +7,6 @@
 
 #define ARQUIVO_RANKING "ranking.csv"
 
-void pintar_fundo(int largura, int altura, int cor_fundo) {
-  screenSetColor(cor_fundo, cor_fundo);
-  for (int y = 0; y < altura; y++) {
-    screenGotoxy(0, y);
-    for (int x = 0; x < largura; x++) {
-      printf(" ");
-    }
-  }
-}
-
 void tela_inicial() {
   const char *arte[] = {"░▒▓█▓▒░      ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░       "
                         "░▒▓████████▓▒░▒▓██████▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░        ",
@@ -37,7 +27,7 @@ void tela_inicial() {
                         "                              Pressione ENTER para começar..."};
 
   screenClear();
-  pintar_fundo(150, 45, BLACK);
+
   screenSetColor(WHITE, BLACK);
 
   int linhas = sizeof(arte) / sizeof(arte[0]);
@@ -61,7 +51,6 @@ int nome_valido(const char *nome) {
 
 void mostrar_instrucoes(char *nome_jogador) {
   screenClear();
-  pintar_fundo(150, 45, BLACK);
   screenSetColor(WHITE, BLACK);
 
   // Desenhar borda ao redor da tela
@@ -117,9 +106,9 @@ void mostrar_instrucoes(char *nome_jogador) {
   do {
     if (tentativa) {
       screenSetColor(WHITE, BLACK);
-      screenGotoxy(10, 24);
+      screenGotoxy(10, 21);
       printf("                                                    ");
-      screenGotoxy(10, 25);
+      screenGotoxy(10, 22);
       printf("                                                    ");
     }
 

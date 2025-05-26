@@ -16,11 +16,19 @@ void showDialog(const char *clue1, const char *clue2) {
           printf("=");
         continue;
       }
+      if (y == MAP_HEIGHT + 4) {
+        printf("=");
+        continue;
+      };
+      if (x == 1 || x == MAP_WIDTH - 1) {
+        printf("|");
+        continue;
+      }
       printf(" ");
     }
   }
-  screenGotoxy(1, MAP_HEIGHT + 2);
+  screenGotoxy(3, MAP_HEIGHT + 2);
   printf("%s", clue1);
-  screenGotoxy(1, MAP_HEIGHT + 3);
+  screenGotoxy(3, MAP_HEIGHT + 3);
   printf("%s", clue2);
 }
