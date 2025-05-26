@@ -1,6 +1,7 @@
 #include "chute.h"
 #include "ranking.h"
 #include <string.h>
+#include <stdlib.h>
 
 void limpar_area_modal(int x, int y, int width, int height) {
   screenSetColor(WHITE, BLACK);
@@ -45,11 +46,13 @@ static void centralizar_texto(int y, const char *texto, int modal_x) {
 }
 
 ItensChute obter_chute_jogador(const ItensUsados *itens) {
-
   ItensChute chute = {-1, -1, -1};
   int categoria_atual = 0;
   int selecao = 0;
   int tecla;
+
+  int embaralhados[3][USADOS_POR_CATEGORIA];
+  int ja_embaralhado[3] = {0, 0, 0};  // flags para embaralhar só uma vez
 
   while (categoria_atual < 3) {
     int screen_width = MAXX - MINX;
@@ -81,6 +84,22 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
       break;
     }
 
+    // Embaralha apenas uma vez por categoria
+    if (!ja_embaralhado[categoria_atual]) {
+      for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
+        embaralhados[categoria_atual][i] = indices[i];
+      }
+
+      for (int i = USADOS_POR_CATEGORIA - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        int temp = embaralhados[categoria_atual][i];
+        embaralhados[categoria_atual][i] = embaralhados[categoria_atual][j];
+        embaralhados[categoria_atual][j] = temp;
+      }
+
+      ja_embaralhado[categoria_atual] = 1;
+    }
+
     centralizar_texto(modal_y + 1, titulo, modal_x);
 
     for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
@@ -89,10 +108,10 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
         screenSetColor(BLACK, WHITE);
       else
         screenSetColor(WHITE, BLACK);
-      printf("%s", opcoes[indices[i]]);
+      printf("%s", opcoes[embaralhados[categoria_atual][i]]);
     }
-    screenSetColor(WHITE, BLACK);
 
+    screenSetColor(WHITE, BLACK);
     screenGotoxy(modal_x + 2, modal_y + MODAL_HEIGHT - 2);
     printf("Setas: Navegar   Enter: Selecionar");
     screenGotoxy(modal_x + 2, modal_y + MODAL_HEIGHT - 1);
@@ -113,7 +132,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
             else if (tecla == 66 && selecao < USADOS_POR_CATEGORIA - 1)
               selecao++;
           } else {
-            // Tecla ESC real
+            // ESC real
             if (categoria_atual > 0) {
               categoria_atual--;
               break;
@@ -122,15 +141,16 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
             }
           }
         } else if (tecla == '\n' || tecla == 10 || tecla == 13) {
+          int escolhido = embaralhados[categoria_atual][selecao];
           switch (categoria_atual) {
           case 0:
-            chute.suspeitos = indices[selecao];
+            chute.suspeitos = escolhido;
             break;
           case 1:
-            chute.armas = indices[selecao];
+            chute.armas = escolhido;
             break;
           case 2:
-            chute.locais = indices[selecao];
+            chute.locais = escolhido;
             break;
           }
           categoria_atual++;
@@ -144,6 +164,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
 
   return chute;
 }
+
 
 void mostrar_resultado_chute(int acertos, const char *nome, double tempo) {
   int modal_x = MINX + (MAXX - MINX - MODAL_WIDTH) / 2;

@@ -4,6 +4,5 @@
 int validar_nome(const char *nome);
 void salvar_ranking(const char *nome, double tempo);
 void mostrar_ranking();
-void limpar_ranking();
 
 #endif
