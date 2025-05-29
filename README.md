@@ -1,120 +1,80 @@
 # Lógica Fatal
-> Você está pronto para encarnar um detetive com um misterioso caso de assassinato em mãos?
 
-## Programação Imperativa e Funcional - 2025.1
+include/: Esta pasta normalmente contém os arquivos de cabeçalho (com extensão .h). Estes arquivos definem a interface dos módulos do programa, como declarações de funções, estruturas de dados, macros, etc. Outros arquivos de código fonte (.c) incluirão estes cabeçalhos para utilizar as funcionalidades neles declaradas.
 
-### - Professor Diego de Freitas
-### - CESAR School
+chute.h
+dados.h
+dialogo.h
+jogo.h
+keyboard.h
+mapa.h
+pistas.h
+player.h
+ranking.h
+salas.h
+screen.h
+temporizador.h
+timer.h
+ui.h
 
-## Membros
+src/: Esta pasta contém os arquivos de código fonte (com extensão .c). Estes arquivos contêm a implementação real das funções e lógicas declaradas nos arquivos de cabeçalho.
 
-<ul>
-    <li>Victor Ferreira Marques: @vic-fmr</li>
-    <li>Lucas Rodrigues da Silva Junior: @lucxsz-web</li>
-    <li>Camila Maria Teixeira Alcântara: @camilamta275</li>
-    <li>Ana Sofia Da Silva Moura: @sun-cs-sol</li>
-    <li>René Melo de Lucena: @renysoo</li>
-</ul>
+chute.c
+dialogo.c
+jogo.c
+keyboard.c
+main.c: Este é o ponto de entrada principal do programa.
+mapa.c
+pistas.c
+player.c
+ranking.c
+salas.c
+screen.c
+temporizador.c
+timer.c
+ui.c
 
-## 🎯 Objetivo do Jogo
+.clang-format: Este arquivo é usado para definir um estilo de formatação de código consistente para o projeto quando se utiliza a ferramenta clang-format. Isso ajuda a manter o código legível e uniforme, especialmente quando vários desenvolvedores trabalham no mesmo projeto.
 
-Sua principal missão é identificar corretamente três elementos-chave para solucionar o caso:
 
-* O **Suspeito** 👤
-* A **Arma** do crime 🔪
-* O **Local** exato do ocorrido 📍
+LICENSE: Este arquivo contém as informações sobre a licença sob a qual o software é distribuído (por exemplo, MIT, GPL, Apache). Ele define como outras pessoas podem usar, modificar e distribuir o código.
 
-A cada nova partida, a combinação correta é gerada aleatoriamente, oferecendo um novo desafio e alta rejogabilidade.
 
-## 룰 Como Jogar
+Makefile: Este arquivo é usado pela ferramenta make para compilar e construir o projeto. Ele contém regras que especificam como compilar os arquivos de código fonte, linká-los e gerar o executável final.
 
-Para desvendar o mistério, você precisará explorar, coletar pistas e usar sua capacidade de dedução.
+##Organização dos Arquivos
 
-### 🗺️ Exploração: Mapa Interativo
-
-* A faculdade é composta por um conjunto fixo de cômodos (ex: Auditório, Sala 401, Biblioteca, Praça, Copa, Sala de TI, Sala dos Professores e Garagem).
-* Movimente-se entre os cômodos utilizando as teclas **W, A, S e D**.
-* A movimentação é gerenciada por menus na interface com a `CLI-lib`, simulando um mapa simples.
-
-### 🔍 Sistema de Pistas
-
-* Em cada sala que você visitar, haverá uma pista lógica relacionada ao caso.
-* As pistas são apresentadas como proposições condicionais ou negativas. Exemplos:
-    * _"Se o crime ocorreu no Local 1, então a arma não foi a Arma 1.”_
-    * _"A Suspeito 1 nunca entraria na Local 2.”_
-    * _"Se o assassino foi o Suspeito 3, a arma não foi a Arma 2.”_
-* Você deve usar sua dedução lógica a partir dessas proposições para chegar à solução.
-
-### ☝️ Dedução e Acusação
-
-* Quando se sentir confiante sobre a solução, pressione a tecla **"C"** para fazer uma acusação.
-* Será solicitado que você escolha:
-    1.  Um suspeito
-    2.  Uma arma
-    3.  Um lugar
-* Sua resposta será comparada com a solução correta, e o resultado (acerto total ou erro parcial/total) será mostrado.
-
-## 🏆 Ranking
-
-* Seu desempenho será avaliado com base no tempo!
-* **Quanto menos tempo** você levar para resolver o caso de Diego, **maior será sua posição no ranking** de detetives.
-* Será solicitado que você digite seu nome para que, ao final do jogo, seu tempo seja contabilizado.
-* Os jogadores que resolverem o problema mais rápido ficam nas maiores posições e são eleitos os melhores detetives!
-
-Prepare sua mente analítica, colete as evidências e mostre suas habilidades para solucionar o assassinato de Diego e se consagrar como o melhor detetive!
-
-## Como Compilar e Executar
-
-Estas instruções irão guiá-lo sobre como compilar e executar o jogo em um ambiente Linux ou macOS.
-
-### 1. Pré-requisitos
-
-* **Compilador C (GCC):** É necessário ter o GCC (GNU Compiler Collection) instalado.
-    * **Linux (Debian/Ubuntu):**
-        ```bash
-        sudo apt update && sudo apt install build-essential
-        ```
-    * **Linux (Fedora):**
-        ```bash
-        sudo dnf groupinstall "Development Tools"
-        ```
-    * **macOS:** Instale as Ferramentas de Linha de Comando do Xcode. Abra o Terminal e digite `gcc`. Se não estiver instalado, o sistema solicitará a instalação.
-
-### 2. Compilando o Jogo
-
-**Usando o `Makefile`**
-
-O projeto inclui um `Makefile` que automatiza o processo de compilação.
-
-1.  Abra o seu terminal e navegue até o diretório raiz do projeto:
-    ```bash
-    cd caminho/para/logica-fatal/
-    ```
-2.  Execute o comando `make`:
-    ```bash
-    make
-    ```
-    Isso compilará todos os arquivos fonte e gerará o arquivo executável chamado `logica-fatal` dentro de uma pasta `build/` (ou seja, `build/logica-fatal`).
-
-### 3. Executando o Jogo
-
-Após a compilação bem-sucedida:
-
-* **Opção 1: Usando o alvo `run` do Makefile (Mais conveniente)**
-  O `Makefile` possui um alvo `run` que compila (se necessário) e executa o jogo para você:
-    ```bash
-    make run
-    ```
-
-* **Opção 2: Executando o arquivo diretamente**
-  Se você compilou com `make` ou manualmente (e o executável está em `build/logica-fatal`):
-    ```bash
-    ./build/logica-fatal
-    ```
-
-### 4. Limpando os Arquivos de Compilação
-
-O  `Makefile` também inclui um alvo para limpar os arquivos gerados pela compilação (arquivos objeto e o executável):
-
-```bash
-make clean
+logica-fatal/
+├── include/       <-- Arquivos de cabeçalho (.h)
+│   ├── chute.h
+│   ├── dados.h
+│   ├── dialogo.h
+│   ├── jogo.h
+│   ├── keyboard.h
+│   ├── mapa.h
+│   ├── pistas.h
+│   ├── player.h
+│   ├── ranking.h
+│   ├── salas.h
+│   ├── screen.h
+│   ├── temporizador.h
+│   ├── timer.h
+│   └── ui.h
+├── src/           <-- Arquivos de código fonte (.c)
+│   ├── chute.c
+│   ├── dialogo.c
+│   ├── jogo.c
+│   ├── keyboard.c
+│   ├── main.c
+│   ├── mapa.c
+│   ├── pistas.c
+│   ├── player.c
+│   ├── ranking.c
+│   ├── salas.c
+│   ├── screen.c
+│   ├── temporizador.c
+│   ├── timer.c
+│   └── ui.c
+├── .clang-format
+├── LICENSE
+└── Makefile       <-- Arquivo para automatizar a compilação
