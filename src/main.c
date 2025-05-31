@@ -41,6 +41,16 @@ int main() {
     if (keyhit()) {
       ch = readch();
 
+      if (ch == 27 && keyhit() && readch() == 91) {
+        char direcao = readch();
+        switch (direcao) {
+          case 'A': ch = 'w'; break;
+          case 'B': ch = 's'; break;
+          case 'C': ch = 'd'; break;
+          case 'D': ch = 'a'; break;
+        }
+      }
+
       if (ch == 'c') { // Tecla para abrir o chute
         ItensChute chute = obter_chute_jogador(&itens);
         if (chute.suspeitos != -1) { // Se não cancelou

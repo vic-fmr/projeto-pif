@@ -105,7 +105,7 @@ ItensChute obter_chute_jogador(const ItensUsados *itens) {
     for (int i = 0; i < USADOS_POR_CATEGORIA; i++) {
       screenGotoxy(modal_x + 2, modal_y + 3 + i);
       if (i == selecao)
-        screenSetColor(BLACK, WHITE);
+        screenSetColor(YELLOW, WHITE);
       else
         screenSetColor(WHITE, BLACK);
       printf("%s", opcoes[embaralhados[categoria_atual][i]]);
